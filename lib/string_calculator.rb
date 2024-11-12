@@ -2,15 +2,9 @@ class StringCalculator
   def add(str)
     raise ArgumentError, "Input must be a string" unless str.is_a?(String)
 
+    # Return 0 for empty string
     return 0 if str.empty?
 
-    # Split the string by commas and convert each part to an integer
-    # str.split(',').map(&:to_i).sum
-    
-    # Allow the add method to handle new lines between numbers (instead of commas). 
-    # str.split(/,|\n/).map(&:to_i).sum
-
-    # Support different delimiters\
     # Check for a custom delimiter at the beginning of the string
     if str.start_with?("//")
       delimiter, str = extract_custom_delimiter(str)
@@ -18,30 +12,23 @@ class StringCalculator
       delimiter = /,|\n/  # Default delimiters: comma or newline
     end
 
-    # str.split(delimiter).map(&:to_i).sum
-
-    # Split the numbers and map them to integers
+    # Split the numbers, map to integers, and check for negative numbers in one pass
     numbers_array = str.split(delimiter).map(&:to_i)
-
-    # Check for negative numbers
     negatives = numbers_array.select { |num| num < 0 }
 
-    if negatives.any?
-      raise ArgumentError, "Negative numbers not allowed: #{negatives.join(', ')}"
-    end
+    # Raise an exception if there are negative numbers
+    raise ArgumentError, "Negative numbers not allowed: #{negatives.join(', ')}" if negatives.any?
 
-    # Return the sum if no negative numbers
+    # Return the sum of the numbers
     numbers_array.sum
   end
 
   private
 
-  # Method to extract the custom delimiter and the rest of the string
-  def extract_custom_delimiter(numbers)
-    # Match and capture the custom delimiter
-    match_data = numbers.match(%r{//(.+)\n(.*)})
+  def extract_custom_delimiter(str)
+    # Capture custom delimiter and numbers using a single regex match
+    match_data = str.match(%r{//(.+)\n(.*)})
     delimiter = Regexp.escape(match_data[1])  # Escape to handle special characters
-    numbers = match_data[2]                  # The rest of the string
-    [delimiter, numbers]
+    [delimiter, match_data[2]]  # Return delimiter and the rest of the string
   end
 end
