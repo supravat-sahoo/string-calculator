@@ -42,7 +42,10 @@ RSpec.describe StringCalculator do
 
     context 'when the input contains custom delimiters' do
       it 'handles custom delimiters correctly' do
-        expect(string_calculator.add("//;\n1;2")).to eq(3)
+        expect(string_calculator.add("//;\n1;2;3")).to eq(6)
+        expect(string_calculator.add("//*\n1*2*3")).to eq(6)
+        expect(string_calculator.add("//abc\n1abc2abc3")).to eq(6)
+        expect(string_calculator.add("//+\n1+2+3")).to eq(6)
       end
     end
 
