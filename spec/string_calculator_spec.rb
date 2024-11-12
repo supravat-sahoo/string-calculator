@@ -21,7 +21,9 @@ RSpec.describe StringCalculator do
     end
 
     it 'should get error for non string value' do
-      expect(string_calculator.add(1)).to eq('Input must be a string')
+      expect { string_calculator.add(123) }.to raise_error(ArgumentError, "Input must be a string")
+      expect { string_calculator.add([]) }.to raise_error(ArgumentError, "Input must be a string")
+      expect { string_calculator.add(nil) }.to raise_error(ArgumentError, "Input must be a string")
     end
   end
 
@@ -40,8 +42,8 @@ RSpec.describe StringCalculator do
 
   context 'add with negative numbers' do
     it 'should get error for negative input' do
-      expect(string_calculator.add("1,-2,3")).to eq('Negative numbers not allowed: -2')
-      expect(string_calculator.add("1,-2,-3")).to eq('Negative numbers not allowed: -2, -3')
+      expect { string_calculator.add("1,-2,3") }.to raise_error(ArgumentError, "Negative numbers not allowed: -2")
+      expect { string_calculator.add("1,-2,-3") }.to raise_error(ArgumentError, "Negative numbers not allowed: -2, -3")
     end 
   end
 

@@ -1,6 +1,6 @@
 class StringCalculator
   def add(str)
-    return "Input must be a string" unless str.is_a?(String)
+    raise ArgumentError, "Input must be a string" unless str.is_a?(String)
 
     return 0 if str.empty?
 
@@ -27,7 +27,7 @@ class StringCalculator
     negatives = numbers_array.select { |num| num < 0 }
 
     if negatives.any?
-      return "Negative numbers not allowed: #{negatives.join(', ')}"
+      raise ArgumentError, "Negative numbers not allowed: #{negatives.join(', ')}"
     end
 
     # Return the sum if no negative numbers
