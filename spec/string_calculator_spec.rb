@@ -31,4 +31,18 @@ RSpec.describe StringCalculator do
     end
   end
 
+  context 'add with different delimiters' do
+    it 'should get response for input with new delimiters as well' do
+      expect(string_calculator.add("//;\n1;2")).to eq(3)
+    end 
+  end
+
+
+  context 'add with negative numbers' do
+    it 'should get error for negative input' do
+      expect(string_calculator.add("1,-2,3")).to eq('Negative numbers not allowed: -2')
+      expect(string_calculator.add("1,-2,-3")).to eq('Negative numbers not allowed: -2, -3')
+    end 
+  end
+
 end
