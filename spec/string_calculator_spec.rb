@@ -18,4 +18,9 @@ RSpec.describe StringCalculator do
   it 'should get sum for large numbers' do
     expect(string_calculator.add('1,2,3,8,8,10,7,8,10')).to eq(57)
   end
+
+  it 'should get error for non string value' do
+    expect(string_calculator.add(1)).to eq('Input must be a string')
+  end
+
 end
